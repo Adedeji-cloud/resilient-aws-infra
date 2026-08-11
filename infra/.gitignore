@@ -1,0 +1,17 @@
+# Terraform working files — downloaded automatically, don't commit
+.terraform/
+
+# State files — can contain sensitive data (IPs, IDs, sometimes secrets)
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Variable files that might contain secrets
+*.tfvars
+*.tfvars.json
+
+# Terraform plan output files
+*.tfplan
