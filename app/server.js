@@ -27,6 +27,12 @@ app.get('/health', (req, res) => {
 // we'll talk about that when we get to Piece 5.
 const CHAOS_SECRET = process.env.CHAOS_SECRET || 'change-me';
 
+// Simulate a bad deploy: crash on startup if this "required" config is missing.
+if (!process.env.REQUIRED_CONFIG_VALUE) {
+  console.error('FATAL: REQUIRED_CONFIG_VALUE is not set. Exiting.');
+  process.exit(1);
+}
+
 app.get('/chaos/toggle-unhealthy', (req, res) => {
   const providedSecret = req.header('X-Chaos-Secret');
 
