@@ -44,3 +44,9 @@ variable "alert_email" {
   description = "Email address to receive incident alerts"
   type        = string
 }
+
+variable "github_repo" {
+  description = "GitHub repo in the form owner/repo-name"
+  type        = string
+  default     = "Adedeji-cloud/resilient-aws-infra"
+}
