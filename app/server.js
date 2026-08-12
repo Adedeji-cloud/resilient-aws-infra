@@ -25,7 +25,15 @@ app.get('/health', (req, res) => {
 // A deliberate "break glass" switch, for practicing incident response later.
 // Not something a real production app would expose publicly like this —
 // we'll talk about that when we get to Piece 5.
+const CHAOS_SECRET = process.env.CHAOS_SECRET || 'change-me';
+
 app.get('/chaos/toggle-unhealthy', (req, res) => {
+  const providedSecret = req.header('X-Chaos-Secret');
+
+  if (providedSecret !== CHAOS_SECRET) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   forceUnhealthy = !forceUnhealthy;
   res.json({ forceUnhealthy });
 });

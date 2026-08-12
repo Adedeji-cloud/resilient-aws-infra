@@ -33,3 +33,9 @@ variable "availability_zones" {
   type        = list(string)
   default     = ["eu-west-1a", "eu-west-1b"]
 }
+
+variable "chaos_secret" {
+  description = "Secret required in X-Chaos-Secret header to trigger chaos endpoint"
+  type        = string
+  sensitive   = true
+}

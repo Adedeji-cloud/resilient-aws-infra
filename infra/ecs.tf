@@ -60,6 +60,12 @@ resource "aws_ecs_task_definition" "app" {
           protocol      = "tcp"
         }
       ]
+      environment = [
+        {
+          name  = "CHAOS_SECRET"
+          value = var.chaos_secret
+        }
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
