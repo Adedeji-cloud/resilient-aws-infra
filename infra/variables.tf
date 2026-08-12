@@ -39,3 +39,8 @@ variable "chaos_secret" {
   type        = string
   sensitive   = true
 }
+
+variable "alert_email" {
+  description = "Email address to receive incident alerts"
+  type        = string
+}

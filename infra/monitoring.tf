@@ -1,3 +1,19 @@
+# SNS topic — the "channel" that alarms publish to, and that subscribers listen on
+resource "aws_sns_topic" "alerts" {
+  name = "${var.project_name}-alerts"
+
+  tags = {
+    Name = "${var.project_name}-alerts"
+  }
+}
+
+# Email subscription — you'll need to confirm this via a link AWS emails you
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = var.alert_email
+}
+
 # A dashboard showing the health of your service at a glance
 resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = "${var.project_name}-dashboard"
@@ -74,6 +90,8 @@ resource "aws_cloudwatch_metric_alarm" "unhealthy_targets" {
   threshold           = 0
   alarm_description   = "Fires when at least one target is unhealthy"
   treat_missing_data  = "notBreaching"
+alarm_actions       = [aws_sns_topic.alerts.arn]
+  ok_actions          = [aws_sns_topic.alerts.arn]
 
   dimensions = {
     TargetGroup  = aws_lb_target_group.app.arn_suffix
