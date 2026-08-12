@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 3000;
 let forceUnhealthy = false;
 
 app.get('/', (req, res) => {
-  res.send('<h1>Resilient AWS Infra — it works</h1>');
+  res.send('<h1>Resilient AWS Infra - it works</h1>');
 });
 
-// A REAL health check — not just "am I running", but "am I actually okay"
+// A REAL health check - not just "am I running", but "am I actually okay"
 app.get('/health', (req, res) => {
   const memoryUsedMB = process.memoryUsage().heapUsed / 1024 / 1024;
   const isHealthy = !forceUnhealthy && memoryUsedMB < 200;
@@ -23,7 +23,7 @@ app.get('/health', (req, res) => {
 });
 
 // A deliberate "break glass" switch, for practicing incident response later.
-// Not something a real production app would expose publicly like this —
+// Not something a real production app would expose publicly like this -
 // we'll talk about that when we get to Piece 5.
 const CHAOS_SECRET = process.env.CHAOS_SECRET || 'change-me';
 
