@@ -64,6 +64,10 @@ resource "aws_ecs_task_definition" "app" {
         {
           name  = "CHAOS_SECRET"
           value = var.chaos_secret
+        },
+        {
+          name  = "REQUIRED_CONFIG_VALUE"
+          value = "production"
         }
       ]
       logConfiguration = {
@@ -90,6 +94,10 @@ resource "aws_ecs_service" "app" {
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = 2
   launch_type     = "FARGATE"
+deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
 
   network_configuration {
     subnets          = aws_subnet.private[*].id
